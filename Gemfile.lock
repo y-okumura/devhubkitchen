@@ -2,6 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     artifactory (2.7.0)
+    kitchen-ansiblepush (0.6.2)
+      test-kitchen (~> 1.4)
     kitchen-vagrant (1.0.2)
       test-kitchen (~> 1.4)
     mixlib-install (2.1.12)
@@ -31,6 +33,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  kitchen-ansiblepush
   kitchen-vagrant
   test-kitchen
 

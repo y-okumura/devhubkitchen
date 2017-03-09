@@ -3,7 +3,8 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: ansible_push
+  playbook: devhub.yml
 
 platforms:
   - name: centos-6.7
@@ -12,5 +13,5 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-    attributes:
+    provisioner:
+      hosts: devhub

@@ -1,0 +1,29 @@
+- name: epel-release
+  become: true
+  yum:
+    name: epel-release
+- name: nodejs
+  become: true
+  yum:
+    name: nodejs
+- name: npm
+  become: true
+  yum:
+    name: npm
+- name: forever
+  become: true
+  yum:
+    name: forever
+- name: co
+  become: true
+  git:
+    repo: https://github.com/volpe28v/DevHub.git
+    dest: /usr/local/DevHub
+- name: build
+  become: true
+  npm:
+    path: /usr/local/DevHub
+- name: "Start DevHub."
+  become: true
+  command: forever start /usr/local/DevHub/app.js
+  when: "forever_list.stdout.find('/usr/local/DevHub/app.js') == -1"
