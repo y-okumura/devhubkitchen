@@ -12,8 +12,12 @@
     name: npm
 - name: forever
   become: true
-  yum:
+  npm:
     name: forever
+- name: initd-forever
+  become: true
+  npm:
+    name: initd-forever
 - name: co
   become: true
   git:
@@ -23,7 +27,13 @@
   become: true
   npm:
     path: /usr/local/DevHub
-- name: "Start DevHub."
+- name: create DevHub service
   become: true
-  command: forever start /usr/local/DevHub/app.js
-  when: "forever_list.stdout.find('/usr/local/DevHub/app.js') == -1"
+  command: initd-forever -n devhub
+  args:
+    chdir: /usr/local/DevHub/
+- name: start debhub
+  service:
+    name: debhub
+    enable: yes
+    state: started

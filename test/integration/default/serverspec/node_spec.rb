@@ -2,6 +2,6 @@ require 'serverspec'
 
 set :backend, :exec
 
-describe command('pwd') do
-  its(:stdout) {should contain 'home'}
+describe port(3000) do
+  it { should be_listening }
 end
