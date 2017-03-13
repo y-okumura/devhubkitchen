@@ -1,5 +1,5 @@
 ---
-- hosts: devhub
+- hosts: all
   roles:
     - MongoDB
     - devhub
