@@ -1,39 +1,25 @@
-- name: epel-release
-  become: true
-  yum:
-    name: epel-release
-- name: nodejs
-  become: true
-  yum:
-    name: nodejs
-- name: npm
-  become: true
-  yum:
-    name: npm
-- name: forever
-  become: true
-  npm:
-    name: forever
-- name: initd-forever
-  become: true
-  npm:
-    name: initd-forever
 - name: co
   become: true
   git:
     repo: https://github.com/volpe28v/DevHub.git
-    dest: /usr/local/DevHub
+    dest: /usr/local/devhub
 - name: build
   become: true
   npm:
-    path: /usr/local/DevHub
-- name: create DevHub service
+    global: true
+    path: /usr/local/devhub
+- name: create DevHub service script
   become: true
-  command: initd-forever -n devhub
+  command: initd-forever -a /usr/local/devhub/app.js -n devhub
   args:
-    chdir: /usr/local/DevHub/
-- name: start debhub
+    chdir: /etc/init.d
+- name: make DevHub script executable
+  become: true
+  file:
+    path: /etc/init.d/devhub
+    mode: 0755
+- name: start
   service:
-    name: debhub
-    enable: yes
+    name: devhub
+    enabled: yes
     state: started

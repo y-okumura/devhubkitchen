@@ -2,6 +2,7 @@
   become: true
   blockinfile:
     dest: /etc/yum.repos.d/mongodb.repo
+    create: yes
     content: |
       [mongodb]
       name=MongoDB Repository

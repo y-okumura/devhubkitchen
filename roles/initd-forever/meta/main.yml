@@ -1,0 +1,4 @@
+dependencies:
+  - role: node.js
+  - role: npm
+  - role: forever
