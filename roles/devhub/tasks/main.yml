@@ -6,7 +6,6 @@
 - name: build
   become: true
   npm:
-    global: true
     path: /usr/local/devhub
 - name: create DevHub service script
   become: true
@@ -18,8 +17,10 @@
   file:
     path: /etc/init.d/devhub
     mode: 0755
-- name: start
+- name: start　devhub service
+  become: true
   service:
     name: devhub
-    enabled: yes
-    state: started
+    # statusの結果がおかしくてstartedだと起動してくれない
+    state: restarted
+    enabled: true
