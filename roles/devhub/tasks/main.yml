@@ -1,29 +1,26 @@
-- name: epel-release
-  become: true
-  yum:
-    name: epel-release
-- name: nodejs
-  become: true
-  yum:
-    name: nodejs
-- name: npm
-  become: true
-  yum:
-    name: npm
-- name: forever
-  become: true
-  yum:
-    name: forever
 - name: co
   become: true
   git:
     repo: https://github.com/volpe28v/DevHub.git
-    dest: /usr/local/DevHub
+    dest: /usr/local/devhub
 - name: build
   become: true
   npm:
-    path: /usr/local/DevHub
-- name: "Start DevHub."
+    path: /usr/local/devhub
+- name: create DevHub service script
   become: true
-  command: forever start /usr/local/DevHub/app.js
-  when: "forever_list.stdout.find('/usr/local/DevHub/app.js') == -1"
+  command: initd-forever -a /usr/local/devhub/app.js -n devhub
+  args:
+    chdir: /etc/init.d
+- name: make DevHub script executable
+  become: true
+  file:
+    path: /etc/init.d/devhub
+    mode: 0755
+- name: start　devhub service
+  become: true
+  service:
+    name: devhub
+    # statusの結果がおかしくてstartedだと起動してくれない
+    state: restarted
+    enabled: true
